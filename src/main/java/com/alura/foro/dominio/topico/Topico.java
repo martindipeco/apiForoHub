@@ -26,4 +26,12 @@ public class Topico {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     private boolean activo;
+
+    public Topico(DatosCreacionTopico datosCreacionTopico, Usuario usuario) {
+        this.titulo = datosCreacionTopico.titulo();
+        this.mensaje = datosCreacionTopico.mensaje();
+        this.fecha = LocalDateTime.now();
+        this.usuario = usuario;
+        this.activo = true;
+    }
 }

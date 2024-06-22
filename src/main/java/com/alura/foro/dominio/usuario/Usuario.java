@@ -23,4 +23,10 @@ public class Usuario {
     private String password;
     private boolean activo;
 
+    public Usuario(DatosUsuario datosUsuario) {
+        this.nombre = datosUsuario.nombre();
+        this.email = datosUsuario.email();
+        this.password = datosUsuario.password();
+        this.activo = true;
+    }
 }
