@@ -21,6 +21,7 @@ public class Usuario {
     private String nombre;
     private String email;
     private String password;
+    private Rol rol;
     private boolean activo;
 
     public Usuario(DatosUsuario datosUsuario) {
