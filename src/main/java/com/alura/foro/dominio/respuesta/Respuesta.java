@@ -29,5 +29,12 @@ public class Respuesta {
     @ManyToOne(fetch = FetchType.LAZY) //muchas respuestas a un usuario
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
     private boolean activo;
+
+    public void setTopico(Topico topico) {
+        this.topico = topico;
+    }
+
+
 }
