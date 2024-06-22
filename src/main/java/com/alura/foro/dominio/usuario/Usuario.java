@@ -21,6 +21,7 @@ public class Usuario {
     private String nombre;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Rol rol;
     private boolean activo;
 
@@ -28,6 +29,7 @@ public class Usuario {
         this.nombre = datosUsuario.nombre();
         this.email = datosUsuario.email();
         this.password = datosUsuario.password();
+        this.rol = datosUsuario.rol();
         this.activo = true;
     }
 }

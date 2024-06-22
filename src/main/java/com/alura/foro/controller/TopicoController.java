@@ -6,6 +6,7 @@ import com.alura.foro.dominio.topico.Topico;
 import com.alura.foro.dominio.topico.TopicoRepository;
 import com.alura.foro.dominio.usuario.Usuario;
 import com.alura.foro.dominio.usuario.UsuarioRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class TopicoController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public void crearTopico(@RequestBody DatosCreacionTopico datosCreacionTopico)
+    public void crearTopico(@RequestBody @Valid DatosCreacionTopico datosCreacionTopico)
     {
         Usuario usuario = null;
         Optional<Usuario> usuarioOpcional = usuarioRepository.findById(datosCreacionTopico.usuarioId());
