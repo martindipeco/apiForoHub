@@ -1,11 +1,13 @@
 package com.alura.foro.dominio.topico;
 
+import com.alura.foro.dominio.respuesta.DatosMostrarRespuesta;
 import com.alura.foro.dominio.respuesta.Respuesta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record DatosMostrarTopico(
 
@@ -18,10 +20,12 @@ public record DatosMostrarTopico(
 
         String nombreUsuario,
 
-        List<Respuesta> respuestas
+        //List<Respuesta> respuestas
+        List<DatosMostrarRespuesta> respuestas
 ) {
     public DatosMostrarTopico(Topico t) {
-        this(t.getTitulo(), t.getMensaje(), t.getFecha(), t.getUsuario().getNombre(), t.getRespuestas());
+        this(t.getTitulo(), t.getMensaje(), t.getFecha(), t.getUsuario().getNombre(),
+                t.getRespuestas().stream().map(r -> new DatosMostrarRespuesta(r)).collect(Collectors.toList()));
     }
 
     //forma incorrecta

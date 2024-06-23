@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "topicos")
@@ -36,16 +37,22 @@ public class Topico {
         this.mensaje = datosCreacionTopico.mensaje();
         this.fecha = LocalDateTime.now();
         this.usuario = usuario;
+        this.respuestas = new ArrayList<>();
         this.activo = true;
     }
 
     public void addRespuesta(Respuesta respuesta) {
         respuestas.add(respuesta);
-        respuesta.setTopico(this);
+        //respuesta.setTopico(this);
     }
 
     public void removeRespuesta(Respuesta respuesta) {
         respuestas.remove(respuesta);
         respuesta.setTopico(null);
+    }
+
+    public void desactivarTopico()
+    {
+        this.activo = false;
     }
 }
