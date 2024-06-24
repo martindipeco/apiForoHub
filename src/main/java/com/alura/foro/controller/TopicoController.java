@@ -11,6 +11,9 @@ import com.alura.foro.dominio.usuario.Usuario;
 import com.alura.foro.dominio.usuario.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,17 +48,18 @@ public class TopicoController {
     }
 
     @GetMapping
-    public List<DatosMostrarTopico> listadoTopicos()
+    public Page<DatosMostrarTopico> listadoTopicos(@PageableDefault(size = 5)Pageable paginacion)
     {
-        var todosLosTopicos = topicoRepository.findAll();
-
+        //var todosLosTopicos = topicoRepository.findAll(paginacion);
+        var todosLosTopicos = topicoRepository.findByActivoTrue(paginacion);
         //var todosLosDatos = todosLosTopicos.stream().map(t -> new DatosMostrarTopico(t)).collect(Collectors.toList());
         //return todosLosTopicos;
 
-        return todosLosTopicos.stream().map(DatosMostrarTopico::new).collect(Collectors.toList());
+        return todosLosTopicos.map(DatosMostrarTopico::new);
     }
 
     @PutMapping
+    //@Transactional no hace falta x q estamos cerrando con save del repositorio
     public void agregarRespuesta(@RequestBody @Valid DatosAgregarRespuesta datosAgregarRespuesta)
     {
         Usuario usuario = null;
@@ -85,7 +89,9 @@ public class TopicoController {
         topicoRepository.save(topicoParaEditar);
     }
 
-    @PutMapping("/{id}")
+    //BORRADO LOGICO
+    @DeleteMapping("/{id}")
+    @Transactional
     public void desactivarTopico(@PathVariable Long id)
     {
         Topico topicoParaDesactivar = null;
@@ -99,11 +105,11 @@ public class TopicoController {
             throw new RuntimeException("No existe ese topico");
         }
         topicoParaDesactivar.desactivarTopico();
-        topicoRepository.save(topicoParaDesactivar);
+        //topicoRepository.save(topicoParaDesactivar); //no hace falta x q estoy usando transactional
     }
 
     //BORRADO FISICO
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     @Transactional
     public void borrarTopico(@PathVariable Long id)
     {

@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public record DatosMostrarTopico(
 
+        Long id,
+
         String titulo,
 
         String mensaje,
@@ -24,7 +26,7 @@ public record DatosMostrarTopico(
         List<DatosMostrarRespuesta> respuestas
 ) {
     public DatosMostrarTopico(Topico t) {
-        this(t.getTitulo(), t.getMensaje(), t.getFecha(), t.getUsuario().getNombre(),
+        this(t.getId(), t.getTitulo(), t.getMensaje(), t.getFecha(), t.getUsuario().getNombre(),
                 t.getRespuestas().stream().map(r -> new DatosMostrarRespuesta(r)).collect(Collectors.toList()));
     }
 
