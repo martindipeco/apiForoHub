@@ -21,8 +21,6 @@ public record DatosMostrarTopico(
         LocalDateTime fecha,
 
         String nombreUsuario,
-
-        //List<Respuesta> respuestas
         List<DatosMostrarRespuesta> respuestas
 ) {
     public DatosMostrarTopico(Topico t) {
