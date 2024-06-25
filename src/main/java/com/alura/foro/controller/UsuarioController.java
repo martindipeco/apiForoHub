@@ -1,10 +1,7 @@
 package com.alura.foro.controller;
 
-import com.alura.foro.dominio.topico.DatosCreacionTopico;
-import com.alura.foro.dominio.topico.DatosMostrarTopico;
-import com.alura.foro.dominio.topico.Topico;
 import com.alura.foro.dominio.usuario.DatosMostrarUsuario;
-import com.alura.foro.dominio.usuario.DatosUsuario;
+import com.alura.foro.dominio.usuario.DatosCreacionUsuario;
 import com.alura.foro.dominio.usuario.Usuario;
 import com.alura.foro.dominio.usuario.UsuarioRepository;
 import jakarta.validation.Valid;
@@ -15,8 +12,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -25,7 +20,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public void crearUsuario(@RequestBody @Valid DatosUsuario datosUsuario)
+    public void crearUsuario(@RequestBody @Valid DatosCreacionUsuario datosUsuario)
     {
         var usuario = new Usuario(datosUsuario);
         usuarioRepository.save(usuario);

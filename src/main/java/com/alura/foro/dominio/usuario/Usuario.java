@@ -25,7 +25,7 @@ public class Usuario {
     private Rol rol;
     private boolean activo;
 
-    public Usuario(DatosUsuario datosUsuario) {
+    public Usuario(DatosCreacionUsuario datosUsuario) {
         this.nombre = datosUsuario.nombre();
         this.email = datosUsuario.email();
         this.password = datosUsuario.password();
