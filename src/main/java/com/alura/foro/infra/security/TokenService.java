@@ -2,8 +2,11 @@ package com.alura.foro.infra.security;
 
 import com.alura.foro.dominio.usuario.Usuario;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +43,28 @@ public class TokenService {
     private Instant generarExpiracionToken(Integer duracionHoras)
     {
         return LocalDateTime.now().plusHours(duracionHoras).toInstant(ZoneOffset.of("-03:00"));
+    }
+
+    public String getSubject(String token)
+    {
+        DecodedJWT decodedJWT = null;
+        try
+        {
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            decodedJWT = JWT.require(algorithm)
+                    .withIssuer("foro")
+                    .build()
+                    .verify(token);
+            decodedJWT.getSubject();
+        }
+        catch(JWTVerificationException e)
+        {
+            System.out.println("Excepción JWTVerification. " + e);
+        }
+        if (decodedJWT.getSubject() == null)
+        {
+            throw new RuntimeException("Verificador JWT es nulll");
+        }
+        return decodedJWT.getSubject();
     }
 }
