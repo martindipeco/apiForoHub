@@ -47,6 +47,10 @@ public class TokenService {
 
     public String getSubject(String token)
     {
+        if (token == null)
+        {
+            throw new RuntimeException("Token llegó null");
+        }
         DecodedJWT decodedJWT = null;
         try
         {
