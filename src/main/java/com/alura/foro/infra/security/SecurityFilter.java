@@ -25,7 +25,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println("El filtro está siendo llamado");
+        System.out.println("doFilterInternal desde SecurityFilter.java está siendo llamado");
         //obtener token del header
         var authHeader = request.getHeader("Authorization");
 

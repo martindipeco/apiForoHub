@@ -22,6 +22,7 @@ public class TokenService {
 
     public String generarToken(Usuario usuario)
     {
+        System.out.println("generarToken desde TokenService.javaS");
         String token = "";
         try
         {
@@ -47,6 +48,7 @@ public class TokenService {
 
     public String getSubject(String token)
     {
+        System.out.println("getSubject desde TokenService.java");
         if (token == null)
         {
             throw new RuntimeException("Token llegó null");
