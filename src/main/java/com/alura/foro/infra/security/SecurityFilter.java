@@ -31,10 +31,11 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (authHeader != null)
         {
-            var token = authHeader.replace("Bearer ", "");
             System.out.println(authHeader);
-            System.out.println(tokenService.getSubject(token));
+            var token = authHeader.replace("Bearer ", "");
+            System.out.println(token);
             var subject = tokenService.getSubject(token);
+            System.out.println(subject);
             if (subject != null)
             {
                 //si llega el subject, el token es válido
@@ -44,6 +45,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+        System.out.println("Inicio filterChain.doFilter");
         filterChain.doFilter(request, response);
+        System.out.println("Fin filterChain.doFilter");
     }
 }

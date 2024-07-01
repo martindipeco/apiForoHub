@@ -22,7 +22,7 @@ public class TokenService {
 
     public String generarToken(Usuario usuario)
     {
-        System.out.println("generarToken desde TokenService.javaS");
+        System.out.println("generarToken desde TokenService.java");
         String token = "";
         try
         {
