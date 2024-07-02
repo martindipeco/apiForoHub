@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll() // puedo obviar el tipo de metodo
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll() //permito creacion de usuarios
                         .requestMatchers(HttpMethod.DELETE, "/topicos").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
