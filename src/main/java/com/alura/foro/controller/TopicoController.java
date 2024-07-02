@@ -9,6 +9,9 @@ import com.alura.foro.dominio.topico.Topico;
 import com.alura.foro.dominio.topico.TopicoRepository;
 import com.alura.foro.dominio.usuario.Usuario;
 import com.alura.foro.dominio.usuario.UsuarioRepository;
+import com.alura.foro.infra.exception.ValidacionIntegridadException;
+import com.alura.foro.infra.validacion.ValidadorRespuesta;
+import com.alura.foro.infra.validacion.ValidadorTopico;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +37,12 @@ public class TopicoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    List<ValidadorTopico> validadoresTopico;
+
+    @Autowired
+    List<ValidadorRespuesta> validadoresRespuesta;
+
     @PostMapping
     public ResponseEntity<DatosMostrarTopico> crearTopico(@RequestBody @Valid DatosCreacionTopico datosCreacionTopico,
                                       UriComponentsBuilder uriComponentsBuilder)
@@ -47,6 +56,16 @@ public class TopicoController {
 //        else {
 //            throw new RuntimeException("No se encontró el usuario");
 //        }
+
+        //Validación de integridad
+        if (usuarioRepository.findById(datosCreacionTopico.usuarioId()).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró usuario con ese ID");
+        }
+
+        //validaciones
+        validadoresTopico.forEach(v -> v.validar(datosCreacionTopico));
+
         var usuario = usuarioRepository.getReferenceById(datosCreacionTopico.usuarioId());
         Topico topico = new Topico(datosCreacionTopico, usuario);
         topicoRepository.save(topico);
@@ -79,6 +98,13 @@ public class TopicoController {
 //        {
 //            throw new RuntimeException("No existe ese topico");
 //        }
+
+        //Validación de integridad
+        if (topicoRepository.findById(id).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró tópico con ese ID");
+        }
+
         var topicoParaMostrar = topicoRepository.getReferenceById(id);
         return ResponseEntity.ok(new DatosMostrarTopico(topicoParaMostrar));
     }
@@ -97,6 +123,13 @@ public class TopicoController {
 //        {
 //            throw new RuntimeException("No existe ese usuario");
 //        }
+
+        //Validación de integridad
+        if (usuarioRepository.findById(datosAgregarRespuesta.usuarioId()).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró usuario con ese ID");
+        }
+
         var usuario = usuarioRepository.getReferenceById(datosAgregarRespuesta.usuarioId());
 
 //        Topico topicoParaEditar = null;
@@ -109,7 +142,17 @@ public class TopicoController {
 //        {
 //            throw new RuntimeException("No existe ese topico");
 //        }
+
+        //Validación de integridad
+        if (topicoRepository.findById(datosAgregarRespuesta.topicoId()).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró tópico con ese ID");
+        }
+
         var topicoParaEditar = topicoRepository.getReferenceById(datosAgregarRespuesta.topicoId());
+
+        //validaciones
+        validadoresRespuesta.forEach(v -> v.validar(datosAgregarRespuesta));
 
         var respuestaNueva = new Respuesta(datosAgregarRespuesta, topicoParaEditar, usuario);
         topicoParaEditar.addRespuesta(respuestaNueva);
@@ -132,6 +175,13 @@ public class TopicoController {
 //        {
 //            throw new RuntimeException("No existe ese topico");
 //        }
+
+        //Validación de integridad
+        if (topicoRepository.findById(id).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró tópico con ese ID");
+        }
+
         var topicoParaDesactivar = topicoRepository.getReferenceById(id);
 
         topicoParaDesactivar.desactivarTopico();
@@ -154,6 +204,12 @@ public class TopicoController {
 //        {
 //            throw new RuntimeException("No existe ese topico");
 //        }
+
+        //Validación de integridad
+        if (topicoRepository.findById(id).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró tópico con ese ID");
+        }
 
         var topicoParaBorrar = topicoRepository.getReferenceById(id);
 

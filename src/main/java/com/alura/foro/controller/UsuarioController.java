@@ -4,6 +4,7 @@ import com.alura.foro.dominio.usuario.DatosMostrarUsuario;
 import com.alura.foro.dominio.usuario.DatosCreacionUsuario;
 import com.alura.foro.dominio.usuario.Usuario;
 import com.alura.foro.dominio.usuario.UsuarioRepository;
+import com.alura.foro.infra.exception.ValidacionIntegridadException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,12 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<DatosMostrarUsuario> unUsuario(@PathVariable Long id)
     {
+        //Validación de integridad
+        if (usuarioRepository.findById(id).isEmpty())
+        {
+            throw new ValidacionIntegridadException("No se encontró usuario con ese ID");
+        }
+
         var usuarioParaMostrar = usuarioRepository.getReferenceById(id);
         return ResponseEntity.ok(new DatosMostrarUsuario(usuarioParaMostrar));
     }
