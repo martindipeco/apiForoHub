@@ -47,6 +47,22 @@ class TopicoRepositoryTest {
         assertThat(!topicoEstas);
     }
 
+    @Test
+    @DisplayName("Debería devolver true cuando sí hay topicos activos con ese id")
+    void findActivoByIdEscenario2TopicoActivo() {
+
+        //given
+        Usuario usuario2 = registrarUsuario("Juana", "juana@mail.com", "456", Rol.USUARIO);
+
+        Topico topicoActivo = registrarTopico("Prueba", "Estoy probando", usuario2.getId());
+
+        //when
+        var topicoEstas = topicoRepository.findActivoById(topicoActivo.getId());
+
+        //then
+        assertThat(topicoEstas);
+    }
+
     private Topico registrarTopico(String titulo, String mensaje, Long usuarioId)
     {
         Usuario usuario = new Usuario();
