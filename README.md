@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Foro Hub es una Java SpringBoot API REST que se centra en los tópicos (temas de consulta "posteos"), y permite a los usuarios:
+Foro Hub es una Java Spring API REST que se centra en los tópicos (temas de consulta "posteos"), y permite a los usuarios:
 
 Crear un nuevo tópico;
 Mostrar todos los tópicos creados;
