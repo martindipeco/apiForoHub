@@ -14,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -71,9 +70,6 @@ class TopicoRepositoryTest {
         {
             usuario = usuarioNuevo.get();
         }
-
-//        Usuario usuario = usuarioRepository.findById(usuarioId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid usuarioId: " + usuarioId));
 
         var topicoNuevo = new Topico(new DatosCreacionTopico(titulo, mensaje, usuarioId), usuario);
         testEntityManager.persist(topicoNuevo);
