@@ -81,7 +81,7 @@ class TopicoControllerTest {
         var datosMostrarTopico = new DatosMostrarTopico(topico);
 
         //when
-        when(topicoService.crearTopico(any(), any())).thenReturn(datosMostrarTopico);
+        when(topicoService.crearTopico(any())).thenReturn(datosMostrarTopico);
 
         var response = mockMvc.perform(post("/topicos")
                 .contentType(MediaType.APPLICATION_JSON)
