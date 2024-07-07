@@ -34,12 +34,7 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private TopicoService topicoService;
-
-
 
     @PostMapping
     public ResponseEntity<DatosMostrarTopico> crearTopico(@RequestBody @Valid DatosCreacionTopico datosCreacionTopico,
@@ -77,7 +72,6 @@ public class TopicoController {
     //@Transactional no hace falta x q estamos cerrando con save del repositorio
     public ResponseEntity agregarRespuesta(@RequestBody @Valid DatosAgregarRespuesta datosAgregarRespuesta)
     {
-
         var topicoEditado = topicoService.agregarRespuesta(datosAgregarRespuesta);
 
         return ResponseEntity.ok(topicoEditado);
@@ -88,7 +82,6 @@ public class TopicoController {
     @Transactional
     public ResponseEntity desactivarTopico(@PathVariable Long id)
     {
-
         //Validación de integridad
         if (topicoRepository.findById(id).isEmpty())
         {
