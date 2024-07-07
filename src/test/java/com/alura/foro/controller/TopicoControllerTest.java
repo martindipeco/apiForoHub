@@ -2,12 +2,16 @@ package com.alura.foro.controller;
 
 import com.alura.foro.dominio.topico.DatosCreacionTopico;
 import com.alura.foro.dominio.topico.DatosMostrarTopico;
+import com.alura.foro.dominio.topico.Topico;
 import com.alura.foro.dominio.topico.TopicoService;
 import com.alura.foro.dominio.usuario.Rol;
 import com.alura.foro.dominio.usuario.Usuario;
 import org.assertj.core.api.Assertions;
+import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -73,8 +77,8 @@ class TopicoControllerTest {
         var datosCreacionTopico = new DatosCreacionTopico("Titulo de prueba",
                 "Mandando un mensaje de prueba", usuario.getId());
 
-        var datosMostrarTopico = new DatosMostrarTopico(11L, "Titulo de prueba", //OJO CON ID para que COINCIDA
-                "Mandando un mensaje de prueba", LocalDateTime.now(), usuario.getNombre(), new ArrayList<>());
+        var topico = new Topico(datosCreacionTopico, usuario);
+        var datosMostrarTopico = new DatosMostrarTopico(topico);
 
         //when
         when(topicoService.crearTopico(any(), any())).thenReturn(datosMostrarTopico);
@@ -89,6 +93,20 @@ class TopicoControllerTest {
 
         var jsonEsperado = mostrarTopicoJacksonTester.write(datosMostrarTopico).getJson();
 
-        assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
+        //para evitar conflictos con la generación de id
+        String jsonReal = response.getContentAsString();
+
+        // Parse JSON strings
+        JSONObject jObjReal = new JSONObject(jsonReal);
+        JSONObject jObjEsperado = new JSONObject(jsonEsperado);
+
+        // Remove id fields
+        jObjReal.remove("id");
+        jObjEsperado.remove("id");
+
+        // Compare JSON objects
+        JSONAssert.assertEquals(jObjEsperado, jObjReal, JSONCompareMode.STRICT);
+
+        //assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
     }
 }
