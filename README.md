@@ -10,8 +10,8 @@ Mostrar un tópico específico;
 Actualizar un tópico;
 Eliminar un tópico.
 
-[Link a video - demo parte 1 (12 min)](https://youtube.com/live/9LjV5dSLbIM?feature=share) 
-[Link a video - demo parte 2 (5 min)](https://youtube.com/live/wI8q06fJl98?feature=share)
+[Link a video - demo parte 1 (5 min)](https://www.loom.com/share/eec277002ab24233876cefae0c5a0e64?sid=78514b57-42c2-4c90-a7fd-e69750382e58)  
+[Link a video - demo parte 2 (3 min)](https://www.loom.com/share/ecac073256644d36b4812d6268e58731?sid=594a1a70-8242-4f8a-8d43-6e34d6a5eefa)
 
 ## Funcionalidades
 
